@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .bg{
+        background-color: red;
+    }
+</style>
+
+<body>
+
+<div id="box">
+    <button v-on:click="run()">test</button>
+    <a href="h" v-on:click.prevent="show">test</a>
+    {{msg}}
+    <p @click="show">test @click</p>
+
+    <p v-if="test.length ==4">{{test}}</p>
+    <p v-else>No</p>
+    {{b}}
+    <p :class="{bg:true}">test background</p>
+    <p :class="vue_bg">test background</p>
+    <button v-on:click="runs()">testURL</button>
+    <button v-on:click="post()">testPOST</button>
+    <input type="text" @keyup="testb" v-model="str">
+    <ul>
+        <li v-for="item in arr">{{item}}</li>
+    </ul>
+</div>
+
+
+<script src="vue.js"></script>
+<script src="vue-resource.js"></script>
+
+<script>
+    new Vue({
+        el:"#box",
+        data:{
+            msg:"this is data",
+            test:"haha",
+            h:"a.html",
+            vue_bg:"bg",
+            str:"",
+            arr:[]
+        },
+        methods:{
+            run:function () {
+                alert(1);
+            },
+            show:function () {
+                alert(1);
+            },
+            runs:function () {
+                this.$http.get("http://127.0.0.1:5000/order",{
+                    params:{
+                        type:"Latte"
+                    },
+                }).then(function (value) {
+
+                    console.log(value)
+                })
+            },
+            post:function () {
+                this.$http.post("http://127.0.0.1:5000/order",
+                    {
+                        type:"Latte"
+                    },
+                    {emulateJSON:true}
+                ).then(function (value) {
+                    console.log(value);
+                })
+            },
+            testb:function () {
+                this.$http.jsonp("https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",{
+                    params:{
+                        wd:this.str
+                    },
+                    jsonp:"cb"
+                }).then(function (value) {
+                    this.arr = value.body.s;
+                })
+            }
+
+        },
+        computed:{
+            b:function () {
+                return this.msg;
+            }
+
+        },
+        create:function () {
+            console.log('after Vue create');
+        },
+        beforeMount:function () {
+            console.log("el created");
+        },
+        mounted:function () {
+            console.log("after");
+        },
+        beforeUpdate:function () {
+            console.log("before chage");
+        },
+        updated:function () {
+            console.log("change");
+        },
+        beforeDestroy:function () {
+            console.log("before destroy");
+        },
+        destroyed:function () {
+            console.log("destroyed");
+        }
+    })
+</script>
+
+</body>
+</html>

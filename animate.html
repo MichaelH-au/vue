@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="animate.css">
+<style>
+    #box{
+        background-color: red;
+        width:200px;
+        height:200px;
+    }
+    .fade-leave-active, .fade-enter-active{
+        transition: 1s all;
+    }
+    .fade-leave-to{
+        opacity: 0;
+    }
+    .fade-enter{
+        opacity: 0;
+
+    }
+
+    .aaa-leave-active, .aaa-enter-active{
+        transition: 1s all;
+    }
+
+    .aaa-leave-to{
+        opacity: 0;
+        transform: translateX(100px);
+
+    }
+    .aaa-enter{
+
+        opacity: 0;
+        transform: translateY(100px);
+    }
+
+    .bbb-leave-active, .bbb-enter-active{
+        transition: 1s all;
+    }
+    .bbb-leave-to, .bbb-enter{
+        opacity: 0;
+    }
+
+</style>
+<body>
+
+<div id="app">
+    <button @click="show_box = !show_box">Button</button>
+
+    <transition name="fade">
+        <div id="box" v-show="show_box"></div>
+    </transition>
+    <transition name="aaa">
+        <div id="box" v-show="show_box"></div>
+    </transition>
+    <transition enter-active-class="animated zoomInLeft" leave-active-class="animated zoomOutRight">
+        <div id="box" v-show="show_box"></div>
+    </transition>
+    <transition name="bbb">
+        <div id="box" v-show="show_box"></div>
+    </transition>
+</div>
+
+<script src="vue.js"></script>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            show_box:false
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <test></test>
+    <com_name :message="parent" :message1 = "another"></com_name>
+</div>
+
+<script src="vue.js"></script>
+<script>
+    <!-- global component-->
+
+    var tpl = {
+        data:function () {
+            return {
+                str:"Here is data",
+                note:"Note"
+            }
+        },
+        template:"<h1 @click='run'>This is a component and {{str}} and {{note}}</h1>",
+        methods:{
+            run:function(){
+                alert(1);
+            }
+        }
+    }
+
+    Vue.component("test",tpl);
+    new Vue({
+        el:"#app",
+        data:{
+            parent:"THis is parent",
+            another:"another"
+        },
+    //局部组建
+        components:{
+            "com_name":{
+                //父组件给子组件
+                props:["message","message1"],
+                template:"<div @click='run'>child component {{message}} {{message1}}</div>",
+                data:function () {
+                    return {
+                        str:123
+                    }
+                },
+                methods:{
+                    run:function () {
+                        alert()
+                    }
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

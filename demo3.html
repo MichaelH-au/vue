@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <h1 v-txt>1,2,3,4,5,10,12,05</h1>
+    <h1 v-date>1525848888799</h1>
+</div>
+
+<script src="vue.js"></script>
+
+<script>
+    new Vue({
+        el:"#app",
+        directives:{
+            "txt":function (el,binding) {
+                console.log(el.innerText);
+                var arr = el.innerText.split(",");
+                console.log(arr);
+                for (var i = 0; i < arr.length;i++){
+                    if(arr[i].length == 1){
+                        console.log("0" + arr[i]);
+                        arr[i] = "0" + arr[i];
+                    }
+                }
+                el.innerText = arr.join(",");
+            },
+            "date":function (el,binding) {
+                var dates = new Date()
+                console.log(dates.getTime());
+                let str = el.innerText.replace(/\s/g,"");
+                console.log(str);
+                var date = new Date(parseInt(str));
+                console.log(date);
+
+            }
+        }
+    })
+</script>
+</body>
+</html>
